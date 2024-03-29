@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Optional
 
 import sqlalchemy as sa
-import sqlalchemy.orm as orm
+from sqlalchemy.orm import Mapped, relationship
 
 from models.flavor import Flavor
 from models.food_preservative import FoodPreservative
@@ -45,27 +45,27 @@ class Popsicle(ModelBase):
     created_at: datetime = sa.Column(sa.DateTime, default=datetime.now, index=True)
     price: float = sa.Column(sa.DECIMAL(8, 2), nullable=False)
     flavor_id: int = sa.Column(sa.Integer, sa.ForeignKey("flavors.id"))
-    flavor: Flavor = orm.relationship("Flavor", lazy="joined")
+    flavor: Mapped[Flavor] = relationship("Flavor", lazy="joined")
     packaging_type_id: int = sa.Column(sa.Integer, sa.ForeignKey("packaging_types.id"))
-    packaging_type: PackagingType = orm.relationship("PackagingType", lazy="joined")
+    packaging_type: Mapped[PackagingType] = relationship("PackagingType", lazy="joined")
     popsicle_type_id: int = sa.Column(sa.Integer, sa.ForeignKey("popsicle_types.id"))
-    popsicle_type: PopsicleType = orm.relationship("PopsicleType", lazy="joined")
+    popsicle_type: Mapped[PopsicleType] = relationship("PopsicleType", lazy="joined")
 
-    ingredients: list[Ingredient] = orm.relationship(
+    ingredients: Mapped[list[Ingredient]] = relationship(
         "Ingredient",
         secondary=popsicles_ingredients,
         backref="ingredient",
         lazy="joined",
     )
 
-    food_preservative: Optional[list[FoodPreservative]] = orm.relationship(
+    food_preservative: Mapped[Optional[list[FoodPreservative]]] = relationship(
         "FoodPreservative",
         secondary=popsicles_food_preservatives,
         backref="food_preservative",
         lazy="joined",
     )
 
-    nutritional_additive: Optional[list[NutritionalAdditive]] = orm.relationship(
+    nutritional_additive: Mapped[Optional[list[NutritionalAdditive]]] = relationship(
         "NutritionalAdditive",
         secondary=popsicles_nutritional_additives,
         backref="nutritional_additive",

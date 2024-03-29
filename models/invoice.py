@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import sqlalchemy as sa
-import sqlalchemy.orm as orm
+from sqlalchemy.orm import Mapped, relationship
 
 from models.batch import Batch
 from models.model_base import ModelBase
@@ -24,9 +24,9 @@ class Invoice(ModelBase):
     serial_number: str = sa.Column(sa.String(45), unique=True, nullable=False)
     description: str = sa.Column(sa.String(200), nullable=False)
     reseller_id: int = sa.Column(sa.Integer, sa.ForeignKey("resellers.id"))
-    reseller: Reseller = orm.relationship("Reseller", lazy="joined")
+    reseller: Mapped[Reseller] = relationship("Reseller", lazy="joined")
 
-    batches: list[Batch] = orm.relationship(
+    batches: Mapped[list[Batch]] = relationship(
         "Batch", secondary=invoices_batches, backref="batch", lazy="dynamic"
     )
 
