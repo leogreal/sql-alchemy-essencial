@@ -41,7 +41,7 @@ popsicles_nutritional_additives = sa.Table(
 class Popsicle(ModelBase):
     __tablename__: str = "popsicles"
 
-    id: int = sa.Column(sa.BigInteger, primary_key=True, autoincrement=True)
+    id: int = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     created_at: datetime = sa.Column(sa.DateTime, default=datetime.now, index=True)
     price: float = sa.Column(sa.DECIMAL(8, 2), nullable=False)
     flavor_id: int = sa.Column(sa.Integer, sa.ForeignKey("flavors.id"))

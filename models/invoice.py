@@ -18,7 +18,7 @@ invoices_batches = sa.Table(
 class Invoice(ModelBase):
     __tablename__: str = "invoices"
 
-    id: int = sa.Column(sa.BigInteger, primary_key=True, autoincrement=True)
+    id: int = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     created_at: datetime = sa.Column(sa.DateTime, default=datetime.now, index=True)
     purchase_value: float = sa.Column(sa.DECIMAL(8, 2), nullable=False)
     serial_number: str = sa.Column(sa.String(45), unique=True, nullable=False)

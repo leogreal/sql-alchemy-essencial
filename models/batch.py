@@ -10,7 +10,7 @@ from models.popsicle_type import PopsicleType
 class Batch(ModelBase):
     __tablename__: str = "batches"
 
-    id: int = sa.Column(sa.BigInteger, primary_key=True, autoincrement=True)
+    id: int = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     created_at: datetime = sa.Column(sa.DateTime, default=datetime.now, index=True)
     popsicle_id: int = sa.Column(sa.Integer, sa.ForeignKey("popsicle_types.id"))
     popsicle_type: Mapped[PopsicleType] = relationship("PopsicleType", lazy="joined")
